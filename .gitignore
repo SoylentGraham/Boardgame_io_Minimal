@@ -1,0 +1,8 @@
+
+node_modules/
+
+game/
+
+package-lock.json
+
+PopBoardGame.xcworkspace/xcuserdata/graham.xcuserdatad/
