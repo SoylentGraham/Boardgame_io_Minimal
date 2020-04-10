@@ -249,11 +249,13 @@
 	  <script type=module>
 		 //import { Client } from './node_modules/boardgame.io/dist/esm/client.js';
 		 import { Client } from './Modules/client.js';
-
+		 import { SocketIO } from './Modules/Boardgame_IO/multiplayer.js';
+		
 	  
 	  const App = Client({
-						 game: TicTacToe//,
+						 game: TicTacToe,
 						 //board: TicTacToeBoard,
+						 multiplayer: SocketIO({ server: 'localhost:8000' }),
 						 });
 						 
 			export default App;

@@ -1,7 +1,7 @@
 import { a as _classCallCheck, k as _objectSpread2, d as _inherits, f as _possibleConstructorReturn, h as _getPrototypeOf, _ as _createClass, s as sync, o as _toConsumableArray, w as update, r as reset } from './reducer-ccb19701.js';
 import { S as Sync } from './base-c99f5be2.js';
 import { M as Master } from './master-f9c0602c.js';
-import io from 'socket.io-client';
+//import io from 'https://www.unpkg.com/socket.io-client@2.3.0/dist/socket.io.js';
 
 /*
  * Copyright 2017 The boardgame.io Authors
