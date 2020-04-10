@@ -9,6 +9,21 @@ const db_flatfile = new FlatFile({
 				});
 
 
+
+// Return true if `cells` is in a winning configuration.
+function IsVictory(cells)
+{
+	if ( cells[3] )
+		return true;
+	return false;
+}
+
+// Return true if all `cells` are occupied.
+function IsDraw(cells) {
+	return cells.filter(c => c === null).length == 0;
+}
+
+
 const TicTacToe = {
 setup: () => ({ cells: Array(9).fill(null) }),
 	

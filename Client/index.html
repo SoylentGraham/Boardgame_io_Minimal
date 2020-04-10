@@ -69,6 +69,14 @@
 			  }
 		  },
 	  };
+	  
+	  class TicTacToeBoard
+	  {
+		  constructor()
+		  {
+			  console.log("Created TicTacToeBoard");
+		  }
+	  }
 	  </script>
 	  
 	  <script>
@@ -231,17 +239,37 @@
 	  const playerCredentials = undefined;
 	  const Lobby = new _LobbyConnectionImpl({ server, gameComponents, playerName, playerCredentials });
 		
+		let GameId = null;
+		let MakeAppFunctor = null;
+		let CurrentGame = null;
 		async function LobbyLoop()
 		{
-			while(Lobby)
+			while(!CurrentGame)
 			{
 				await Lobby.refresh();
 				console.log(JSON.stringify(Lobby.rooms));
+				
+				if ( MakeAppFunctor == null )
+				{
+					console.log('waiting for app functor');
+				}
+				else if ( GameId == null )
+				{
+					const NumPlayers = 1;
+					//	creates a game, but doesn't tell us what the id is...
+					await Lobby.create(TicTacToe.name,NumPlayers);
+					//	so find it
+					await Lobby.refresh();
+					GameId = Lobby.rooms[0].gameID;
+					CurrentGame = MakeAppFunctor(GameId);
+				}
+				
 				await Pop.Yield(2000);
 			}
 		}
 	  LobbyLoop().then(console.warn).catch(console.error);
-		
+
+	  
 		</script>
 	  
 
@@ -251,15 +279,17 @@
 		 import { Client } from './Modules/client.js';
 		 import { SocketIO } from './Modules/Boardgame_IO/multiplayer.js';
 		
-	  
-	  const App = Client({
+		MakeAppFunctor = function(GameId)
+		{
+		  const App = Client({
 						 game: TicTacToe,
-						 //board: TicTacToeBoard,
+						 board: TicTacToeBoard,
+							 gameIdD: GameId,
 						 multiplayer: SocketIO({ server: 'localhost:8000' }),
 						 });
-						 
-			export default App;
-
+						 return App;
+		}
+	  
 		  </script>
 
   </body>
