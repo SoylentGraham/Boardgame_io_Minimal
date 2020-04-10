@@ -1,0 +1,9 @@
+{
+  "name": "game",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "boardgame.io": "^0.39.5",
+    "node-persist": "2.1.0"
+  }
+}
