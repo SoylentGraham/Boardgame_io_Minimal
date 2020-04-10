@@ -262,6 +262,7 @@
 					await Lobby.refresh();
 					GameId = Lobby.rooms[0].gameID;
 					CurrentGame = MakeAppFunctor(GameId);
+					CurrentGame.start();
 				}
 				
 				await Pop.Yield(2000);
@@ -284,7 +285,7 @@
 		  const App = Client({
 						 game: TicTacToe,
 						 board: TicTacToeBoard,
-							 gameIdD: GameId,
+							 gameId: GameId,
 						 multiplayer: SocketIO({ server: 'localhost:8000' }),
 						 });
 						 return App;
