@@ -6,3 +6,5 @@ game/
 package-lock.json
 
 PopBoardGame.xcworkspace/xcuserdata/graham.xcuserdatad/
+
+Server/storage/

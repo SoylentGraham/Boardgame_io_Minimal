@@ -37,6 +37,8 @@ const server = http.createServer(function(request, response) {
 											 })
 								 })
 
+var io = require('socket.io')(server);
+
 server.on('clientError', function onClientError(err, socket) {
 		  console.log('clientError', err)
 		  socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
