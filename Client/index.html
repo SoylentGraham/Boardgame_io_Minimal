@@ -231,14 +231,17 @@
 			}
 		}
 	  
-	  const server = 'http://localhost:8001';
-	  const TicTacToeGame = {};
-	  TicTacToeGame.game = TicTacToe;
-	  const gameComponents = [TicTacToeGame];
-	  const playerName = 'Graham';
-	  const playerCredentials = undefined;
-	  const Lobby = new _LobbyConnectionImpl({ server, gameComponents, playerName, playerCredentials });
-		
+		const server = 'http://localhost:8001';
+		const TicTacToeGame = {};
+		TicTacToeGame.game = TicTacToe;
+		const gameComponents = [TicTacToeGame];
+		const playerName = 'Graham';
+		const playerCredentials = undefined;
+		const Lobby = new _LobbyConnectionImpl({ server, gameComponents, playerName, playerCredentials });
+			
+		const NumPlayers = 2;
+		//	player id is the Nth player in the game... why isn't this dictated by the room/join?
+		let PlayerId = 0;
 		let GameId = null;
 		let MakeAppFunctor = null;
 		let CurrentGame = null;
@@ -255,13 +258,16 @@
 				}
 				else if ( GameId == null )
 				{
-					const NumPlayers = 1;
+					
 					//	creates a game, but doesn't tell us what the id is...
 					await Lobby.create(TicTacToe.name,NumPlayers);
 					//	so find it
 					await Lobby.refresh();
+					
 					GameId = Lobby.rooms[0].gameID;
-					CurrentGame = MakeAppFunctor(GameId);
+					await Lobby.join(TicTacToe.name, GameId, PlayerId);
+
+					CurrentGame = MakeAppFunctor(GameId,PlayerId);
 					CurrentGame.start();
 				}
 				
@@ -282,15 +288,16 @@
 		 import { Client } from './Modules/client.js';
 		 import { SocketIO } from './Modules/Boardgame_IO/multiplayer.js';
 		
-		MakeAppFunctor = function(GameId)
+		MakeAppFunctor = function(GameId,PlayerId)
 		{
-		  const App = Client({
-						 game: TicTacToe,
-						 board: TicTacToeBoard,
-							 gameId: GameId,
-						 multiplayer: SocketIO({ server: 'localhost:8000' }),
-						 });
-						 return App;
+			const ClientParams = {};
+			ClientParams.game = TicTacToe;
+			ClientParams.board = TicTacToeBoard;
+			ClientParams.GameID = GameId;
+			ClientParams.playerID = PlayerId;
+			ClientParams.multiplayer = SocketIO({ server: 'localhost:8000' });
+			const App = Client(ClientParams);
+			return App;
 		}
 	  
 		  </script>
