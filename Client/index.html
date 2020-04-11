@@ -261,12 +261,22 @@
 					
 					//	creates a game, but doesn't tell us what the id is...
 					await Lobby.create(TicTacToe.name,NumPlayers);
-					//	so find it
+					//	...so find it
 					await Lobby.refresh();
+					//const LastRoom = Lobby.rooms.slice(-1)[0];
+					const LastRoom = Lobby.rooms[0];
+					GameId = LastRoom.gameID;
 					
-					GameId = Lobby.rooms[0].gameID;
-					await Lobby.join(TicTacToe.name, GameId, PlayerId);
-
+					//	join this room
+					//	gr: for debugging, just walk over joining if it fails and assume we're in it
+					try
+					{
+						await Lobby.join(TicTacToe.name, GameId, PlayerId);
+					}
+					catch(e)
+					{
+						console.warn(e);
+					}
 					CurrentGame = MakeAppFunctor(GameId,PlayerId);
 					CurrentGame.start();
 				}
