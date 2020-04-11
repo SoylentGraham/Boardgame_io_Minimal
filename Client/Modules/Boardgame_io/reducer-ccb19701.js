@@ -906,7 +906,7 @@ const NoClient = (state, opts) => {
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-const process = { env: { NODE_ENV:'production'}};
+const process = { env: { NODE_ENV:'NOT production'}};
 const production = process.env.NODE_ENV === 'production';
 const logfn = production ? () => { } : console.log;
 const errorfn = console.error;

@@ -396,7 +396,7 @@ function assertReducerShape(reducers) {
  * passed object, and builds a state object with the same shape.
  */
 
-const process = { env: { NODE_ENV:'production'}};
+const process = { env: { NODE_ENV:'NOT production'}};
 
 function combineReducers(reducers) {
   var reducerKeys = Object.keys(reducers);

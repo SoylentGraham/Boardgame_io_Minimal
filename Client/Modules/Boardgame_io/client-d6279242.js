@@ -257,6 +257,8 @@ function () {
       this._running = true;
       var debugImpl = null;
 
+	 const process = { env: { NODE_ENV:'NOT production'}};
+
       if (process.env.NODE_ENV !== 'production') {
         debugImpl = Debug;
       }
